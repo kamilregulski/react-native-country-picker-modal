@@ -271,10 +271,11 @@ export default class CountryPicker extends Component {
     })
   }
 
-  setModalVisible = (value) => {
+  setModalVisible(value) {
     this.setState({
       modalVisible: value
-    }, () => this.props.modalVisible(this.state.modalVisible))
+    });
+    return this.props.modalVisible(value);
   }
 
   renderCountry(country, index) {
@@ -322,7 +323,7 @@ export default class CountryPicker extends Component {
           transparent={this.props.transparent}
           animationType={this.props.animationType}
           visible={this.state.modalVisible}
-          onRequestClose={this.setModalVisible(false)}
+          onRequestClose={() => this.setModalVisible(false)}
         >
           <View style={styles.modalContainer}>
             <View style={styles.header}>
