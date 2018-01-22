@@ -58,7 +58,7 @@ export default class CountryPicker extends Component {
     styles: PropTypes.object,
     filterPlaceholder: PropTypes.string,
     autoFocusFilter: PropTypes.bool,
-    modalVisible: PropTypes.bool,
+    modalVisible: PropTypes.func.isRequired,
     // to provide a functionality to disable/enable the onPress of Country Picker.
     disabled: PropTypes.bool,
     filterPlaceholderTextColor: PropTypes.string,
@@ -132,7 +132,7 @@ export default class CountryPicker extends Component {
       .map(c => c[0])
 
     this.state = {
-      modalVisible: this.props.modalVisible,
+      modalVisible: false,
       cca2List: countryList,
       dataSource: ds.cloneWithRows(countryList),
       filter: '',
@@ -183,10 +183,9 @@ export default class CountryPicker extends Component {
 
   onSelectCountry(cca2) {
     this.setState({
-      modalVisible: false,
       filter: '',
       dataSource: ds.cloneWithRows(this.state.cca2List)
-    })
+    }, () => this.setModalVisible(false))
 
     this.props.onChange({
       cca2,
@@ -198,10 +197,9 @@ export default class CountryPicker extends Component {
 
   onClose() {
     this.setState({
-      modalVisible: false,
       filter: '',
       dataSource: ds.cloneWithRows(this.state.cca2List)
-    })
+    }, () => this.setModalVisible(false))
     if (this.props.onClose) {
       this.props.onClose()
     }
@@ -273,6 +271,12 @@ export default class CountryPicker extends Component {
     })
   }
 
+  setModalVisible = (value) => {
+    this.setState({
+      modalVisible: value
+    }, () => this.props.modalVisible(this.state.modalVisible))
+  }
+
   renderCountry(country, index) {
     return (
       <TouchableOpacity
@@ -318,7 +322,7 @@ export default class CountryPicker extends Component {
           transparent={this.props.transparent}
           animationType={this.props.animationType}
           visible={this.state.modalVisible}
-          onRequestClose={() => this.setState({ modalVisible: false })}
+          onRequestClose={this.setModalVisible(false)}
         >
           <View style={styles.modalContainer}>
             <View style={styles.header}>
