@@ -58,6 +58,7 @@ export default class CountryPicker extends Component {
     styles: PropTypes.object,
     filterPlaceholder: PropTypes.string,
     autoFocusFilter: PropTypes.bool,
+    modalVisible: PropTypes.bool,
     // to provide a functionality to disable/enable the onPress of Country Picker.
     disabled: PropTypes.bool,
     filterPlaceholderTextColor: PropTypes.string,
@@ -131,7 +132,7 @@ export default class CountryPicker extends Component {
       .map(c => c[0])
 
     this.state = {
-      modalVisible: false,
+      modalVisible: this.props.modalVisible,
       cca2List: countryList,
       dataSource: ds.cloneWithRows(countryList),
       filter: '',
@@ -313,21 +314,6 @@ export default class CountryPicker extends Component {
   render() {
     return (
       <View>
-        <TouchableOpacity
-          disabled={this.props.disabled}
-          onPress={() => this.setState({ modalVisible: true })}
-          activeOpacity={0.7}
-        >
-          {this.props.children ? (
-            this.props.children
-          ) : (
-            <View
-              style={[styles.touchFlag, { marginTop: isEmojiable ? 0 : 5 }]}
-            >
-              <Text>Select</Text>
-            </View>
-          )}
-        </TouchableOpacity>
         <Modal
           transparent={this.props.transparent}
           animationType={this.props.animationType}
