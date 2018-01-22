@@ -132,7 +132,7 @@ export default class CountryPicker extends Component {
       .map(c => c[0])
 
     this.state = {
-      modalVisible: false,
+      modalVisible: true,
       cca2List: countryList,
       dataSource: ds.cloneWithRows(countryList),
       filter: '',
