@@ -46,7 +46,7 @@ const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 export default class CountryPicker extends Component {
   static propTypes = {
-    cca2: PropTypes.string.isRequired,
+    cca2: PropTypes.string,
     translation: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     onClose: PropTypes.func,
